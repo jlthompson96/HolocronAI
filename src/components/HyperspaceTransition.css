@@ -1,0 +1,66 @@
+/* ── Hyperspace jump transition (persona change) ─────────────── */
+.hyperspace {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  overflow: hidden;
+  background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.55) 70%);
+  animation: hyperspace-fade var(--hyperspace-duration, 700ms) ease-out forwards;
+}
+
+.hyperspace__streak {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--hs-length);
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--gold) 60%, #fff) 70%,
+    #fff 100%
+  );
+  box-shadow: 0 0 6px var(--gold-glow);
+  transform-origin: 0 50%;
+  transform: rotate(var(--hs-angle)) translateX(var(--hs-offset)) scaleX(0);
+  opacity: 0;
+  animation: hyperspace-streak calc(var(--hyperspace-duration, 700ms) * 0.8) cubic-bezier(0.55, 0, 0.85, 0.4) forwards;
+}
+
+.hyperspace__flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, color-mix(in srgb, var(--gold) 35%, #fff) 0%, transparent 55%);
+  opacity: 0;
+  animation: hyperspace-flash var(--hyperspace-duration, 700ms) ease-out forwards;
+}
+
+@keyframes hyperspace-streak {
+  0%   { opacity: 0;   transform: rotate(var(--hs-angle)) translateX(var(--hs-offset)) scaleX(0.02); }
+  20%  { opacity: 1; }
+  100% { opacity: 0.9; transform: rotate(var(--hs-angle)) translateX(calc(var(--hs-offset) + 60vmax)) scaleX(1); }
+}
+
+@keyframes hyperspace-flash {
+  0%, 55% { opacity: 0; }
+  70%     { opacity: 0.45; }
+  100%    { opacity: 0; }
+}
+
+@keyframes hyperspace-fade {
+  0%   { opacity: 0; }
+  12%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Reduced motion: no streaks, just a gentle accent glow pulse */
+@media (prefers-reduced-motion: reduce) {
+  .hyperspace__streak { display: none; }
+  .hyperspace { background: none; }
+  .hyperspace__flash {
+    background: radial-gradient(circle at center, var(--gold-glow) 0%, transparent 65%);
+    animation: hyperspace-fade var(--hyperspace-duration, 700ms) ease-in-out forwards;
+  }
+}

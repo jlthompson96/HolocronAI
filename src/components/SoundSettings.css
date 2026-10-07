@@ -1,0 +1,31 @@
+/* ── Sound settings block (inside SettingsPanel) ─────────────── */
+.sound-settings__row {
+  align-items: center;
+}
+
+.sound-settings__toggle {
+  min-width: 96px;
+}
+.sound-settings__toggle--muted {
+  opacity: 0.7;
+}
+
+.sound-settings__slider {
+  flex: 1;
+  min-width: 0;
+  accent-color: var(--gold);
+  cursor: pointer;
+}
+.sound-settings__slider:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.sound-settings__value {
+  font-family: var(--heading);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  min-width: 3.5em;
+  text-align: right;
+}

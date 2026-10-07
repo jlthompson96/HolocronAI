@@ -1,0 +1,85 @@
+.preset-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.preset-chips__group {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.preset-chips__group-label {
+  flex: 0 0 64px;
+  padding-top: 4px;
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  opacity: 0.8;
+  line-height: 1.2;
+}
+
+.preset-chips__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.preset-chips__chip {
+  background: var(--space-mid);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px 9px;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.preset-chips__chip:hover:not(:disabled) {
+  border-color: var(--gold);
+  color: var(--text-bright);
+}
+
+.preset-chips__chip:focus-visible {
+  outline: 1px solid var(--gold);
+  outline-offset: 1px;
+}
+
+.preset-chips__chip--active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: color-mix(in srgb, var(--gold) 12%, transparent);
+}
+
+.preset-chips__chip:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.preset-chips__toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.preset-chips__toggle:hover .persona-editor__label {
+  color: var(--text-bright);
+}
+
+.preset-chips__summary {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  color: var(--gold);
+}

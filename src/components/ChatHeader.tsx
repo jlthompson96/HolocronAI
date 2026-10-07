@@ -1,0 +1,75 @@
+
+
+interface ChatHeaderProps {
+  onToggleSettings: () => void;
+  settingsOpen: boolean;
+  onClearChat: () => void;
+  onToggleArchive: () => void;
+  archiveOpen: boolean;
+  onToggleDebate?: () => void;
+  debateOpen?: boolean;
+  onToggleMission?: () => void;
+  missionOpen?: boolean;
+}
+
+export default function ChatHeader({ onToggleSettings, settingsOpen, onClearChat, onToggleArchive, archiveOpen, onToggleDebate, debateOpen, onToggleMission, missionOpen }: ChatHeaderProps) {
+  return (
+    <header className="chat-header">
+      <div className="chat-header__title-group">
+        <span className="chat-header__emblem" aria-hidden="true">✦</span>
+        <h1 className="chat-header__title">HolocronAI</h1>
+        <span className="chat-header__emblem" aria-hidden="true">✦</span>
+      </div>
+      <div className="chat-header__actions">
+        <button
+          className="btn btn--ghost"
+          onClick={onClearChat}
+          title="Clear conversation"
+          aria-label="Clear conversation"
+        >
+          Clear Chat
+        </button>
+        <button
+          className={`btn btn--ghost ${archiveOpen ? 'btn--active' : ''}`}
+          onClick={onToggleArchive}
+          title="Open holocron archive"
+          aria-label="Toggle holocron archive"
+          aria-expanded={archiveOpen}
+        >
+          ◈ Archive
+        </button>
+        {onToggleDebate && (
+          <button
+            className={`btn btn--ghost ${debateOpen ? 'btn--active' : ''}`}
+            onClick={onToggleDebate}
+            title="Stage a debate between two personas"
+            aria-label="Toggle debate arena"
+            aria-expanded={!!debateOpen}
+          >
+            ⚔ Debate
+          </button>
+        )}
+        {onToggleMission && (
+          <button
+            className={`btn btn--ghost ${missionOpen ? 'btn--active' : ''}`}
+            onClick={onToggleMission}
+            title="Play an interactive mission"
+            aria-label="Toggle missions"
+            aria-expanded={!!missionOpen}
+          >
+            ◉ Missions
+          </button>
+        )}
+        <button
+          className={`btn btn--ghost ${settingsOpen ? 'btn--active' : ''}`}
+          onClick={onToggleSettings}
+          title="Configure server settings"
+          aria-label="Toggle settings panel"
+          aria-expanded={settingsOpen}
+        >
+          ⚙ Settings
+        </button>
+      </div>
+    </header>
+  );
+}
