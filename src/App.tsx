@@ -161,6 +161,7 @@ export default function App() {
           debateOpen={debateOpen}
           onToggleMission={() => setMissionOpen((prev) => !prev)}
           missionOpen={missionOpen}
+          isActive={isLoading}
         />
         <PersonaSelector
           personas={allPersonas}
