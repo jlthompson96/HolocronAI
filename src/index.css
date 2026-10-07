@@ -448,6 +448,17 @@ body {
   align-items: stretch;
 }
 
+.settings-panel__presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.settings-panel__presets .btn {
+  font-size: 0.65rem;
+  padding: 4px 10px;
+}
+
 .settings-panel__input {
   flex: 1;
   background: var(--space-mid);

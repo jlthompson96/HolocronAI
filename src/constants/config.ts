@@ -1,7 +1,8 @@
 import type { Persona, FactionTheme, Reaction } from '../types/chat';
 
-// Empty string = same-origin; Vite's dev proxy forwards /v1 → http://localhost:1234
-// Set a full URL (e.g. http://localhost:1234) only if LM Studio has CORS enabled.
+// Empty string = same-origin; Vite's dev proxy forwards /v1 → LLM_SERVER (default http://localhost:1234).
+// A full URL also works: Ollama (http://localhost:11434) allows localhost origins by default,
+// and LM Studio (http://localhost:1234) needs CORS enabled.
 export const DEFAULT_SERVER_URL = '';
 export const DEFAULT_IMAGE_SERVER_URL = '';
 export const MAX_INPUT_LENGTH = 2000;

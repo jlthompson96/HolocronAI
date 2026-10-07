@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { MISSIONS } from '../constants/missions';
 import type { MissionScenario, MissionStats } from '../constants/missions';
 import { parseGmReply, statsToContext } from '../utils/missionState';
+import { postChatCompletion } from '../utils/chatCompletion';
 
 const STORAGE_KEY = 'sw-chat-active-mission';
 
@@ -154,12 +155,12 @@ export function useMission(serverUrl: string, imageServerUrl: string) {
 
     let full = '';
     try {
-      const response = await fetch(`${serverUrl}/v1/chat/completions`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ model: 'local-model', messages: apiMessages, temperature: 0.8, stream: true }),
-        signal: controller.signal,
-      });
+      const { response } = await postChatCompletion(
+        serverUrl,
+        undefined,
+        { messages: apiMessages, temperature: 0.8, stream: true },
+        controller.signal,
+      );
 
       if (!response.ok) {
         throw new Error(`The Imperial network returned an error: ${response.status} ${response.statusText}`);
@@ -214,7 +215,7 @@ export function useMission(serverUrl: string, imageServerUrl: string) {
       const msg =
         err instanceof Error && err.message.startsWith('The Imperial')
           ? err.message
-          : 'Holonet disruption detected. Is your LM Server running with CORS enabled?';
+          : 'Holonet disruption detected. Is your LLM server (LM Studio or Ollama) running and reachable?';
       setError(msg);
       // Roll back the failed turn
       setMessages(history.slice(0, -1));

@@ -8,6 +8,13 @@ interface SettingsPanelProps {
   onSaveImageUrl: (url: string) => void;
 }
 
+// LM Studio goes through the dev proxy (empty URL): calling it directly needs CORS enabled in
+// LM Studio, otherwise the browser's preflight fails. Ollama allows localhost origins by default.
+const SERVER_PRESETS = [
+  { label: 'LM Studio', url: '', title: 'Dev proxy → http://localhost:1234' },
+  { label: 'Ollama', url: 'http://localhost:11434', title: 'http://localhost:11434' },
+];
+
 function validateUrl(raw: string): string | null {
   if (!raw.trim()) return null; // empty = not configured, that's valid
   try { new URL(raw.trim()); return null; }
@@ -22,9 +29,7 @@ export default function SettingsPanel({ serverUrl, onSave, imageServerUrl, onSav
   const [imgValidationError, setImgValidationError] = useState('');
 
   const handleSave = () => {
-    try {
-      new URL(draft.trim());
-    } catch {
+    if (validateUrl(draft)) {
       setValidationError('Enter a valid URL, e.g. http://localhost:1234');
       return;
     }
@@ -45,20 +50,33 @@ export default function SettingsPanel({ serverUrl, onSave, imageServerUrl, onSav
 
   return (
     <div className="settings-panel" role="region" aria-label="Server settings">
-      <p className="settings-panel__label">LM Studio Server URL</p>
+      <p className="settings-panel__label">LLM Server URL <span className="settings-panel__hint">(LM Studio / Ollama / OpenAI-compatible)</span></p>
       <div className="settings-panel__row">
         <input
           type="text"
           className={`settings-panel__input ${validationError ? 'settings-panel__input--error' : ''}`}
           value={draft}
           onChange={(e) => { setDraft(e.target.value); setValidationError(''); }}
-          placeholder="Leave empty for dev proxy → localhost:1234"
-          aria-label="LM Studio server URL"
+          placeholder="Leave empty to use the dev proxy"
+          aria-label="LLM server URL"
           aria-describedby={validationError ? 'settings-url-error' : undefined}
         />
         <button className="btn btn--gold" onClick={handleSave}>
           {saved ? '✓ Saved' : 'Save'}
         </button>
+      </div>
+      <div className="settings-panel__presets">
+        {SERVER_PRESETS.map((p) => (
+          <button
+            key={p.label}
+            type="button"
+            className={`btn btn--ghost ${draft.trim() === p.url ? 'btn--active' : ''}`}
+            onClick={() => { setDraft(p.url); setValidationError(''); }}
+            title={p.title}
+          >
+            {p.label}
+          </button>
+        ))}
       </div>
       {validationError && (
         <p id="settings-url-error" className="settings-panel__error" role="alert">{validationError}</p>

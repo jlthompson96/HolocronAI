@@ -138,7 +138,7 @@ export function useDebate(serverUrl: string, getSettings?: (persona: Persona) =>
             setError(
               err instanceof Error && err.message.startsWith('The Imperial')
                 ? err.message
-                : 'Holonet disruption detected. Is your LM Server running with CORS enabled?',
+                : 'Holonet disruption detected. Is your LLM server (LM Studio or Ollama) running and reachable?',
             );
           }
           setStatus('stopped');

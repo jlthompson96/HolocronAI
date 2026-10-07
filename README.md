@@ -7,12 +7,13 @@
   <img src="https://img.shields.io/badge/TypeScript-6-00d4ff?style=for-the-badge&logo=typescript&logoColor=white&labelColor=0a0a0f" alt="TypeScript">
   <img src="https://img.shields.io/badge/Vite-build-00d4ff?style=for-the-badge&logo=vite&logoColor=white&labelColor=0a0a0f" alt="Vite">
   <img src="https://img.shields.io/badge/LM_Studio-compatible-00d4ff?style=for-the-badge&labelColor=0a0a0f" alt="LM Studio compatible">
+  <img src="https://img.shields.io/badge/Ollama-compatible-00d4ff?style=for-the-badge&labelColor=0a0a0f" alt="Ollama compatible">
   <img src="https://img.shields.io/badge/license-MIT-00d4ff?style=for-the-badge&labelColor=0a0a0f" alt="MIT license">
 </p>
 
 # HolocronAI
 
-A Star Wars–themed chat client for locally hosted LLMs. HolocronAI talks to any OpenAI-compatible server (built and tested against [LM Studio](https://lmstudio.ai/)) and wraps it in character personas, faction themes, a persona debate arena, and an AI-run text adventure.
+A Star Wars–themed chat client for locally hosted LLMs. HolocronAI talks to any OpenAI-compatible server (tested with [LM Studio](https://lmstudio.ai/) and [Ollama](https://ollama.com/)) and wraps it in character personas, faction themes, a persona debate arena, and an AI-run text adventure.
 
 Everything runs in the browser. There is no backend; chats, personas and settings are stored in `localStorage`.
 
@@ -50,7 +51,7 @@ flowchart LR
     end
     UI -- "/v1/chat/completions<br/>(streaming SSE)" --> Proxy["Vite dev proxy"]
     UI -- "/v1/models" --> Proxy
-    Proxy --> LLM["🤖 LM Studio<br/>localhost:1234"]
+    Proxy --> LLM["🤖 LM Studio :1234<br/>or Ollama :11434"]
     UI -- "/v1/images/generations" --> IMG["🎨 Image server<br/>(optional)"]
 ```
 
@@ -73,7 +74,9 @@ React 19, TypeScript, Vite, `react-markdown` + `remark-gfm`. No UI framework; st
 ### Prerequisites
 
 - Node.js (a current LTS release)
-- An OpenAI-compatible LLM server. With LM Studio: load a model and start the local server on the default port, `1234`.
+- An OpenAI-compatible LLM server:
+  - **LM Studio:** load a model and start the local server on the default port, `1234`.
+  - **Ollama:** pull a model (for example `ollama pull llama3.2`). Ollama serves on port `11434`.
 
 ### Install and run
 
@@ -86,9 +89,18 @@ Open the URL Vite prints (usually http://localhost:5173).
 
 In development, Vite proxies `/v1/*` to `http://localhost:1234` (see [vite.config.ts](vite.config.ts)), so the default empty **Server URL** works without enabling CORS on LM Studio.
 
+### Using Ollama
+
+Either option works:
+
+- Open **⚙ Settings**, click the **Ollama** preset (`http://localhost:11434`) and save. Ollama accepts requests from `localhost` origins by default, so no CORS setup is needed.
+- Or point the dev proxy at Ollama and leave **Server URL** empty: `LLM_SERVER=http://localhost:11434 npm run dev`. You can also put `LLM_SERVER=...` in `.env.local`.
+
+If a persona has no model selected, the app uses the first model the server lists. Ollama keeps a small context window by default, so long chats and missions can lose earlier messages. Start Ollama with a larger window to avoid this, for example `OLLAMA_CONTEXT_LENGTH=8192 ollama serve`.
+
 ### Connecting to a different server
 
-Open **⚙ Settings** and set the **Server URL** to your server's base URL, for example `http://192.168.1.10:1234`, without the `/v1` suffix. When the app calls a server directly rather than through the dev proxy, the server must allow CORS. In LM Studio, turn on CORS in the server settings.
+Open **⚙ Settings** and set the **Server URL** to your server's base URL, for example `http://192.168.1.10:1234`, without the `/v1` suffix. The **Ollama** preset fills in `http://localhost:11434`. The **LM Studio** preset clears the URL so requests go through the dev proxy. When the app calls a server directly rather than through the dev proxy, the server must allow CORS. In LM Studio, turn on CORS in the server settings.
 
 The app uses these endpoints:
 
@@ -100,13 +112,13 @@ The app uses these endpoints:
 
 ### Image generation
 
-LM Studio does not generate images. To use `/image` or **Visualize scene** in Missions, set an **Image Server URL** in Settings that points at a server exposing an OpenAI-compatible `/v1/images/generations` endpoint, such as AUTOMATIC1111 or ComfyUI behind a compatible API. Images are requested at 512×512.
+Neither LM Studio nor Ollama serves `/v1/images/generations`. To use `/image` or **Visualize scene** in Missions, set an **Image Server URL** in Settings that points at a server exposing an OpenAI-compatible `/v1/images/generations` endpoint, such as AUTOMATIC1111 or ComfyUI behind a compatible API. Images are requested at 512×512.
 
 ## Scripts
 
 | Command | Description |
 | --- | --- |
-| `npm run dev` | Start the Vite dev server with the `/v1` proxy |
+| `npm run dev` | Start the Vite dev server with the `/v1` proxy (target set by `LLM_SERVER`, default `http://localhost:1234`) |
 | `npm run build` | Type-check and build for production into `dist/` |
 | `npm run preview` | Serve the production build locally |
 | `npm run lint` | Run ESLint |
