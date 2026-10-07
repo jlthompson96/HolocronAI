@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 150" width="1000" height="150" role="img" aria-label="Faction themes: Jedi Order, Sith Empire, Rebel Alliance and Republic">
+  <style>
+    .saber { animation: hum 2.4s ease-in-out infinite; }
+    @keyframes hum { 0%,100% { opacity: 1 } 50% { opacity: .6 } }
+    @media (prefers-reduced-motion: reduce) { .saber { animation: none } }
+  </style>
+  <defs><radialGradient id="neb0" cx="0.85" cy="0.2" r="0.7"><stop offset="0" stop-color="#4da6ff" stop-opacity="0.28"/><stop offset="1" stop-color="#4da6ff" stop-opacity="0"/></radialGradient><radialGradient id="neb1" cx="0.85" cy="0.2" r="0.7"><stop offset="0" stop-color="#e53030" stop-opacity="0.28"/><stop offset="1" stop-color="#e53030" stop-opacity="0"/></radialGradient><radialGradient id="neb2" cx="0.85" cy="0.2" r="0.7"><stop offset="0" stop-color="#ff7a00" stop-opacity="0.28"/><stop offset="1" stop-color="#ff7a00" stop-opacity="0"/></radialGradient><radialGradient id="neb3" cx="0.85" cy="0.2" r="0.7"><stop offset="0" stop-color="#ffc300" stop-opacity="0.28"/><stop offset="1" stop-color="#ffc300" stop-opacity="0"/></radialGradient><filter id="g" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <g>
+      <rect x="10.0" y="10" width="232" height="130" rx="10" fill="#040810" stroke="#4da6ff" stroke-opacity="0.55"/>
+      <rect x="10.0" y="10" width="232" height="130" rx="10" fill="url(#neb0)"/>
+      <rect x="26.0" y="122" width="200" height="3" rx="1.5" fill="#4da6ff" class="saber" style="animation-delay:-0.0s"/>
+      <text x="30.0" y="62" font-size="30" fill="#4da6ff" filter="url(#g)">✦</text>
+      <text x="30.0" y="92" font-family="Orbitron, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="1.5" fill="#4da6ff">JEDI ORDER</text>
+      <text x="30.0" y="111" font-family="Rajdhani, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#a0a0b4">Serene blues · #4da6ff</text>
+    </g><g>
+      <rect x="257.5" y="10" width="232" height="130" rx="10" fill="#060405" stroke="#e53030" stroke-opacity="0.55"/>
+      <rect x="257.5" y="10" width="232" height="130" rx="10" fill="url(#neb1)"/>
+      <rect x="273.5" y="122" width="200" height="3" rx="1.5" fill="#e53030" class="saber" style="animation-delay:-0.4s"/>
+      <text x="277.5" y="62" font-size="30" fill="#e53030" filter="url(#g)">◈</text>
+      <text x="277.5" y="92" font-family="Orbitron, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="1.5" fill="#e53030">SITH EMPIRE</text>
+      <text x="277.5" y="111" font-family="Rajdhani, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#a0a0b4">Blood red · #e53030</text>
+    </g><g>
+      <rect x="505.0" y="10" width="232" height="130" rx="10" fill="#0d0b09" stroke="#ff7a00" stroke-opacity="0.55"/>
+      <rect x="505.0" y="10" width="232" height="130" rx="10" fill="url(#neb2)"/>
+      <rect x="521.0" y="122" width="200" height="3" rx="1.5" fill="#ff7a00" class="saber" style="animation-delay:-0.8s"/>
+      <text x="525.0" y="62" font-size="30" fill="#ff7a00" filter="url(#g)">◉</text>
+      <text x="525.0" y="92" font-family="Orbitron, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="1.5" fill="#ff7a00">REBEL ALLIANCE</text>
+      <text x="525.0" y="111" font-family="Rajdhani, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#a0a0b4">Flame orange · #ff7a00</text>
+    </g><g>
+      <rect x="752.5" y="10" width="232" height="130" rx="10" fill="#090810" stroke="#ffc300" stroke-opacity="0.55"/>
+      <rect x="752.5" y="10" width="232" height="130" rx="10" fill="url(#neb3)"/>
+      <rect x="768.5" y="122" width="200" height="3" rx="1.5" fill="#ffc300" class="saber" style="animation-delay:-1.2s"/>
+      <text x="772.5" y="62" font-size="30" fill="#ffc300" filter="url(#g)">⊕</text>
+      <text x="772.5" y="92" font-family="Orbitron, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="1.5" fill="#ffc300">REPUBLIC</text>
+      <text x="772.5" y="111" font-family="Rajdhani, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#a0a0b4">Senate gold · #ffc300</text>
+    </g>
+</svg>

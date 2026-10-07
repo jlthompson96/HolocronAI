@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 190" width="1000" height="190" role="img" aria-label="Built-in personas: Oracle, Yoda, Obi-Wan, Vader and R2-D2">
+  <style>
+    .ring { animation: ring 3s ease-in-out infinite; }
+    @keyframes ring { 0%,100% { stroke-opacity: 1 } 50% { stroke-opacity: .35 } }
+    @media (prefers-reduced-motion: reduce) { .ring { animation: none } }
+  </style>
+  <defs><filter id="g" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <rect width="1000" height="190" rx="14" fill="#0a0a0f"/>
+  <rect x="0.5" y="0.5" width="999" height="189" rx="13.5" fill="none" stroke="#00d4ff" stroke-opacity="0.18"/>
+  <g>
+      <circle cx="100" cy="72" r="44" fill="#00d4ff" fill-opacity="0.08" stroke="#00d4ff" stroke-opacity="0.35"/>
+      <circle cx="100" cy="72" r="34" fill="#00d4ff" fill-opacity="0.14" stroke="#00d4ff" stroke-width="2" class="ring" style="animation-delay:-0.0s"/>
+      <text x="100" y="84" text-anchor="middle" font-size="32" fill="#00d4ff" filter="url(#g)">✦</text>
+      <text x="100" y="146" text-anchor="middle" font-family="Orbitron, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="2" fill="#00d4ff">ORACLE</text>
+      <text x="100" y="170" text-anchor="middle" font-family="Rajdhani, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#9a9ab0">Galactic guide</text>
+    </g><g>
+      <circle cx="300" cy="72" r="44" fill="#4ade80" fill-opacity="0.08" stroke="#4ade80" stroke-opacity="0.35"/>
+      <circle cx="300" cy="72" r="34" fill="#4ade80" fill-opacity="0.14" stroke="#4ade80" stroke-width="2" class="ring" style="animation-delay:-0.6s"/>
+      <text x="300" y="84" text-anchor="middle" font-size="32" fill="#4ade80" filter="url(#g)">❋</text>
+      <text x="300" y="146" text-anchor="middle" font-family="Orbitron, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="2" fill="#4ade80">YODA</text>
+      <text x="300" y="170" text-anchor="middle" font-family="Rajdhani, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#9a9ab0">Inverted syntax</text>
+    </g><g>
+      <circle cx="500" cy="72" r="44" fill="#60a5fa" fill-opacity="0.08" stroke="#60a5fa" stroke-opacity="0.35"/>
+      <circle cx="500" cy="72" r="34" fill="#60a5fa" fill-opacity="0.14" stroke="#60a5fa" stroke-width="2" class="ring" style="animation-delay:-1.2s"/>
+      <text x="500" y="84" text-anchor="middle" font-size="32" fill="#60a5fa" filter="url(#g)">⚔</text>
+      <text x="500" y="146" text-anchor="middle" font-family="Orbitron, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="2" fill="#60a5fa">OBI-WAN</text>
+      <text x="500" y="170" text-anchor="middle" font-family="Rajdhani, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#9a9ab0">Calm negotiator</text>
+    </g><g>
+      <circle cx="700" cy="72" r="44" fill="#f87171" fill-opacity="0.08" stroke="#f87171" stroke-opacity="0.35"/>
+      <circle cx="700" cy="72" r="34" fill="#f87171" fill-opacity="0.14" stroke="#f87171" stroke-width="2" class="ring" style="animation-delay:-1.8s"/>
+      <text x="700" y="84" text-anchor="middle" font-size="32" fill="#f87171" filter="url(#g)">◈</text>
+      <text x="700" y="146" text-anchor="middle" font-family="Orbitron, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="2" fill="#f87171">VADER</text>
+      <text x="700" y="170" text-anchor="middle" font-family="Rajdhani, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#9a9ab0">Imperial command</text>
+    </g><g>
+      <circle cx="900" cy="72" r="44" fill="#fbbf24" fill-opacity="0.08" stroke="#fbbf24" stroke-opacity="0.35"/>
+      <circle cx="900" cy="72" r="34" fill="#fbbf24" fill-opacity="0.14" stroke="#fbbf24" stroke-width="2" class="ring" style="animation-delay:-2.4s"/>
+      <text x="900" y="84" text-anchor="middle" font-size="32" fill="#fbbf24" filter="url(#g)">⚙</text>
+      <text x="900" y="146" text-anchor="middle" font-family="Orbitron, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="2" fill="#fbbf24">R2-D2</text>
+      <text x="900" y="170" text-anchor="middle" font-family="Rajdhani, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#9a9ab0">*beep boop*</text>
+    </g>
+</svg>

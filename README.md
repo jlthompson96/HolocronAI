@@ -1,3 +1,15 @@
+<p align="center">
+  <img src="docs/assets/banner.svg" alt="HolocronAI — a Star Wars–themed chat client for locally hosted LLMs" width="100%">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/React-19-00d4ff?style=for-the-badge&logo=react&logoColor=white&labelColor=0a0a0f" alt="React 19">
+  <img src="https://img.shields.io/badge/TypeScript-6-00d4ff?style=for-the-badge&logo=typescript&logoColor=white&labelColor=0a0a0f" alt="TypeScript">
+  <img src="https://img.shields.io/badge/Vite-build-00d4ff?style=for-the-badge&logo=vite&logoColor=white&labelColor=0a0a0f" alt="Vite">
+  <img src="https://img.shields.io/badge/LM_Studio-compatible-00d4ff?style=for-the-badge&labelColor=0a0a0f" alt="LM Studio compatible">
+  <img src="https://img.shields.io/badge/license-MIT-00d4ff?style=for-the-badge&labelColor=0a0a0f" alt="MIT license">
+</p>
+
 # HolocronAI
 
 A Star Wars–themed chat client for locally hosted LLMs. HolocronAI talks to any OpenAI-compatible server (built and tested against [LM Studio](https://lmstudio.ai/)) and wraps it in character personas, faction themes, a persona debate arena, and an AI-run text adventure.
@@ -6,17 +18,51 @@ Everything runs in the browser. There is no backend; chats, personas and setting
 
 ## Features
 
+<p align="center">
+  <img src="docs/assets/personas.svg" alt="Built-in personas: Oracle, Yoda, Obi-Wan, Vader and R2-D2" width="100%">
+</p>
+
 - **Personas.** Five built-in characters, each with its own system prompt: Oracle (the default general assistant), Yoda, Obi-Wan, Vader and R2-D2. Switching persona starts a new chat, with a hyperspace transition.
 - **Custom personas.** Create, edit and delete your own characters. The editor can generate a system prompt with your local model from a name, a description and optional preset traits (era, role, tone).
 - **Per-persona model settings.** Set the model, temperature and max tokens for each persona from the status bar. The model list comes from the server's `/v1/models`.
 - **Streaming responses with stats.** Replies stream token by token and are rendered as Markdown (GFM). The status bar shows time to first token, tokens per second and token count for the last reply.
 - **Reactions and learned preferences.** React to replies (Force Aligned, Jedi Wisdom, Sith Lightning, Dark Side). Each reaction is saved as a short style note for that persona, and up to six notes are added to the persona's system prompt so it adapts to what you like. You can view, remove or turn off these notes in Settings.
 - **Faction themes.** Restyle the UI as the Jedi Order, Sith Empire, Rebel Alliance or Galactic Republic.
+
+  <img src="docs/assets/factions.svg" alt="Faction themes: Jedi Order, Sith Empire, Rebel Alliance and Republic" width="100%">
+
 - **Holocron Archive.** Save conversations and restore them later.
 - **Image generation.** Type `/image <prompt>` to generate an image through a separate OpenAI-compatible image endpoint.
 - **Debate Arena.** Pick two personas, a topic and a number of rounds, and watch them argue. You can step in as moderator mid-debate.
 - **Missions.** An interactive text adventure with the model as Game Master. It tracks health, credits, inventory and objective, and can render the current scene as an image. Scenarios: Escape the Death Star, Heist on Canto Bight, Hunt on Tatooine, Defend Echo Base and Jedi Trials on Ilum. Progress is saved across reloads.
 - **Sound effects.** Lightsaber swing on send, droid blip on reply and a hyperspace whoosh on persona change, all synthesized with the Web Audio API. Volume and mute are in Settings.
+
+## How it works
+
+The app talks straight to your model server from the browser. In development, Vite's proxy forwards `/v1` requests so you don't need CORS.
+
+```mermaid
+flowchart LR
+    subgraph Browser["🌌 Browser — HolocronAI"]
+        UI["Chat · Debate Arena · Missions"]
+        LS[("localStorage<br/>chats · personas · settings")]
+        UI <--> LS
+    end
+    UI -- "/v1/chat/completions<br/>(streaming SSE)" --> Proxy["Vite dev proxy"]
+    UI -- "/v1/models" --> Proxy
+    Proxy --> LLM["🤖 LM Studio<br/>localhost:1234"]
+    UI -- "/v1/images/generations" --> IMG["🎨 Image server<br/>(optional)"]
+```
+
+Reactions feed back into each persona's system prompt, so personas adapt to what you like:
+
+```mermaid
+flowchart LR
+    R["You react<br/>✦ ◈ ⚡ ⊗"] --> N["Style note saved<br/>for that persona"]
+    N --> P["Up to 6 notes added<br/>to the system prompt"]
+    P --> A["Next reply follows<br/>your preferences"]
+    A --> R
+```
 
 ## Tech stack
 
