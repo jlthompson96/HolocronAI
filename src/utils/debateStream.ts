@@ -1,4 +1,5 @@
-import { DEFAULT_MODEL, type ModelSettings } from '../types/modelSettings';
+import type { ModelSettings } from '../types/modelSettings';
+import { postChatCompletion } from './chatCompletion';
 
 export interface ChatCompletionMessage {
   role: 'system' | 'user' | 'assistant';
@@ -6,7 +7,7 @@ export interface ChatCompletionMessage {
 }
 
 /**
- * Streams a chat completion from the LM server (OpenAI-compatible SSE).
+ * Streams a chat completion from the LLM server (OpenAI-compatible SSE).
  * `onToken` receives the accumulated text so far. Returns the full text.
  */
 export async function streamChatCompletion(
@@ -16,18 +17,17 @@ export async function streamChatCompletion(
   signal?: AbortSignal,
   settings: ModelSettings = {},
 ): Promise<string> {
-  const response = await fetch(`${serverUrl}/v1/chat/completions`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: settings.model || DEFAULT_MODEL,
+  const { response } = await postChatCompletion(
+    serverUrl,
+    settings.model,
+    {
       messages,
       temperature: settings.temperature ?? 0.8,
       ...(settings.maxTokens ? { max_tokens: settings.maxTokens } : {}),
       stream: true,
-    }),
+    },
     signal,
-  });
+  );
 
   if (!response.ok) {
     throw new Error(`The Imperial network returned an error: ${response.status} ${response.statusText}`);

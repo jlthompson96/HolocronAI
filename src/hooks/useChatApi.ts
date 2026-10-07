@@ -2,7 +2,8 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import type { Message, ChatError } from '../types/chat';
 import { applyPreferencesSection } from '../utils/preferenceNotes';
 import type { ModelSettings, GenerationStats } from '../types/modelSettings';
-import { DEFAULT_MODEL, DEFAULT_TEMPERATURE } from '../types/modelSettings';
+import { DEFAULT_TEMPERATURE } from '../types/modelSettings';
+import { postChatCompletion } from '../utils/chatCompletion';
 
 interface UseChatApiReturn {
   messages: Message[];
@@ -58,7 +59,6 @@ export function useChatApi(systemPromptContent: string, modelSettings?: ModelSet
     setError(null);
 
     const settings = modelSettingsRef.current ?? {};
-    const requestedModel = settings.model || DEFAULT_MODEL;
     const startedAt = performance.now();
     let firstTokenAt = 0;
     let chunkCount = 0;
@@ -67,17 +67,12 @@ export function useChatApi(systemPromptContent: string, modelSettings?: ModelSet
     let reportedModel: string | null = null;
 
     try {
-      const response = await fetch(`${serverUrl}/v1/chat/completions`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: requestedModel,
-          messages: chatHistory,
-          temperature: settings.temperature ?? DEFAULT_TEMPERATURE,
-          ...(settings.maxTokens ? { max_tokens: settings.maxTokens } : {}),
-          stream: true,
-          stream_options: { include_usage: true },
-        }),
+      const { response, model: requestedModel } = await postChatCompletion(serverUrl, settings.model, {
+        messages: chatHistory,
+        temperature: settings.temperature ?? DEFAULT_TEMPERATURE,
+        ...(settings.maxTokens ? { max_tokens: settings.maxTokens } : {}),
+        stream: true,
+        stream_options: { include_usage: true },
       });
 
       if (!response.ok) {
@@ -154,7 +149,7 @@ export function useChatApi(systemPromptContent: string, modelSettings?: ModelSet
       const message =
         err instanceof Error && err.message.startsWith('The Imperial')
           ? err.message
-          : 'Holonet disruption detected. Is your LM Server running with CORS enabled?';
+          : 'Holonet disruption detected. Is your LLM server (LM Studio or Ollama) running and reachable?';
       setError({ message });
       // Roll back to before the user message (and any partial assistant message)
       setMessages(() => chatHistory.slice(0, -1));

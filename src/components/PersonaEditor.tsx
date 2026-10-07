@@ -107,7 +107,7 @@ export default function PersonaEditor({ persona, serverUrl, onSave, onDelete, on
       setGenerateError(
         err instanceof Error && err.message.startsWith('The Imperial')
           ? err.message
-          : 'Holonet disruption detected. Is your LM Server running?',
+          : 'Holonet disruption detected. Is your LLM server (LM Studio or Ollama) running?',
       );
     } finally {
       if (abortRef.current === controller) {

@@ -1,3 +1,5 @@
+import { postChatCompletion } from './chatCompletion';
+
 const META_PROMPT =
   "You write system prompts for characters in a Star Wars themed AI chat app. " +
   "Given a character name and description, write a single system prompt in the second person ('You are ...') " +
@@ -7,7 +9,7 @@ const META_PROMPT =
   "Output only the system prompt text — no title, no quotes, no preamble.";
 
 /**
- * Streams a generated system prompt for a persona from the LM server.
+ * Streams a generated system prompt for a persona from the LLM server.
  * `onToken` receives the accumulated text so far.
  */
 export async function generatePersonaPrompt(
@@ -26,20 +28,19 @@ export async function generatePersonaPrompt(
     userContent += `\nTraits (work these into the prompt):\n${traits.map((t) => `- ${t}`).join('\n')}`;
   }
 
-  const response = await fetch(`${serverUrl}/v1/chat/completions`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'local-model',
+  const { response } = await postChatCompletion(
+    serverUrl,
+    undefined,
+    {
       messages: [
         { role: 'system', content: META_PROMPT },
         { role: 'user', content: userContent },
       ],
       temperature: 0.8,
       stream: true,
-    }),
+    },
     signal,
-  });
+  );
 
   if (!response.ok) {
     throw new Error(`The Imperial network returned an error: ${response.status} ${response.statusText}`);
