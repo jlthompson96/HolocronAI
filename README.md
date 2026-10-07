@@ -17,6 +17,31 @@ A Star Wars–themed chat client for locally hosted LLMs. HolocronAI talks to an
 
 Everything runs in the browser. There is no backend; chats, personas and settings are stored in `localStorage`.
 
+<p align="center">
+  <img src="docs/assets/screenshots/streaming.gif" alt="Obi-Wan persona streaming a Markdown reply in HolocronAI" width="100%">
+</p>
+
+## Screenshots
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/assets/screenshots/chat.png" alt="Chatting with the Yoda persona, with generation stats in the status bar"></td>
+    <td width="50%"><img src="docs/assets/screenshots/factions.gif" alt="Cycling through the Jedi, Sith, Rebel and Republic faction themes"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Personas</b>: Yoda, with tokens/sec and time to first token in the status bar</td>
+    <td align="center"><b>Faction themes</b>: Jedi, Sith, Rebel and Republic</td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/assets/screenshots/debate.png" alt="Debate Arena: Yoda vs Vader on whether fear is a useful motivator"></td>
+    <td width="50%"><img src="docs/assets/screenshots/missions.png" alt="Missions: Escape the Death Star, with health, credits, objective and inventory"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Debate Arena</b>: Yoda vs Vader</td>
+    <td align="center"><b>Missions</b>: the model as Game Master</td>
+  </tr>
+</table>
+
 ## Features
 
 <p align="center">
