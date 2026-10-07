@@ -3,6 +3,7 @@ import type { Message } from '../types/chat';
 import { msgKey } from '../hooks/useMessageReactions';
 import ChatMessage from './ChatMessage';
 import LoadingIndicator from './LoadingIndicator';
+import HolocronCube from './HolocronCube';
 
 interface ChatWindowProps {
   messages: Message[];
@@ -35,6 +36,7 @@ export default function ChatWindow({ messages, isLoading, reactions, onReact }: 
       {showWarp && <div className="chat-window__warp" aria-hidden="true" />}
       {visibleMessages.length === 0 && (
         <div className="chat-window__empty">
+          <HolocronCube size={56} projected />
           <p>The Force awaits your query, young Padawan.<span className="blink-cursor" aria-hidden="true" /></p>
           <p className="chat-window__empty-sub">Transmit a message to consult the Holocron.</p>
         </div>

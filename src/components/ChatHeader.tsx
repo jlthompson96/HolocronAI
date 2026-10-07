@@ -1,4 +1,4 @@
-
+import HolocronCube from './HolocronCube';
 
 interface ChatHeaderProps {
   onToggleSettings: () => void;
@@ -10,15 +10,16 @@ interface ChatHeaderProps {
   debateOpen?: boolean;
   onToggleMission?: () => void;
   missionOpen?: boolean;
+  /** Spins the header holocron up while a response is streaming */
+  isActive?: boolean;
 }
 
-export default function ChatHeader({ onToggleSettings, settingsOpen, onClearChat, onToggleArchive, archiveOpen, onToggleDebate, debateOpen, onToggleMission, missionOpen }: ChatHeaderProps) {
+export default function ChatHeader({ onToggleSettings, settingsOpen, onClearChat, onToggleArchive, archiveOpen, onToggleDebate, debateOpen, onToggleMission, missionOpen, isActive = false }: ChatHeaderProps) {
   return (
     <header className="chat-header">
       <div className="chat-header__title-group">
-        <span className="chat-header__emblem" aria-hidden="true">✦</span>
+        <HolocronCube size={20} active={isActive} />
         <h1 className="chat-header__title">HolocronAI</h1>
-        <span className="chat-header__emblem" aria-hidden="true">✦</span>
       </div>
       <div className="chat-header__actions">
         <button

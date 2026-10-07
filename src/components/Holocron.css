@@ -1,0 +1,201 @@
+/* ── HolocronCube ────────────────────────────────────────────────
+   Six translucent faces rotated into a cube around a glowing core.
+   Everything tints from --gold, so it follows the active faction. */
+.holocron {
+  --holo-size: 64px;
+  --holo-half: calc(var(--holo-size) / 2);
+  --holo-spin: 14s;
+  position: relative;
+  width: var(--holo-size);
+  height: var(--holo-size);
+  perspective: calc(var(--holo-size) * 6);
+  flex-shrink: 0;
+}
+
+.holocron__cube {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: holocron-spin var(--holo-spin) linear infinite;
+}
+
+.holocron__face {
+  position: absolute;
+  inset: 0;
+  border: 1px solid color-mix(in srgb, var(--gold) 70%, transparent);
+  background:
+    radial-gradient(circle at center, color-mix(in srgb, var(--gold) 22%, transparent), transparent 70%),
+    color-mix(in srgb, var(--gold) 6%, transparent);
+  box-shadow: inset 0 0 calc(var(--holo-size) * 0.18) color-mix(in srgb, var(--gold) 35%, transparent);
+  backface-visibility: visible;
+}
+
+/* Inner etched diamond + sigil dot on every face */
+.holocron__face::before {
+  content: '';
+  position: absolute;
+  inset: 26%;
+  border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent);
+  transform: rotate(45deg);
+}
+.holocron__face::after {
+  content: '';
+  position: absolute;
+  inset: 44%;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 6px var(--gold);
+  opacity: 0.8;
+}
+
+.holocron__face--front  { transform: translateZ(var(--holo-half)); }
+.holocron__face--back   { transform: rotateY(180deg) translateZ(var(--holo-half)); }
+.holocron__face--right  { transform: rotateY(90deg)  translateZ(var(--holo-half)); }
+.holocron__face--left   { transform: rotateY(-90deg) translateZ(var(--holo-half)); }
+.holocron__face--top    { transform: rotateX(90deg)  translateZ(var(--holo-half)); }
+.holocron__face--bottom { transform: rotateX(-90deg) translateZ(var(--holo-half)); }
+
+.holocron__core {
+  position: absolute;
+  inset: 30%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0%, var(--gold) 45%, transparent 72%);
+  filter: blur(1px);
+  animation: holocron-pulse 3s ease-in-out infinite;
+}
+
+.holocron--active {
+  --holo-spin: 3.5s;
+}
+.holocron--active .holocron__core {
+  animation-duration: 0.9s;
+}
+.holocron--active .holocron__face {
+  box-shadow: inset 0 0 calc(var(--holo-size) * 0.3) color-mix(in srgb, var(--gold) 60%, transparent);
+}
+
+/* Projector beam: a soft cone of light rising from an emitter below */
+.holocron--projected {
+  margin-bottom: calc(var(--holo-size) * 0.9);
+}
+.holocron--projected::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  width: calc(var(--holo-size) * 2);
+  height: calc(var(--holo-size) * 1.2);
+  transform: translateX(-50%);
+  clip-path: polygon(30% 0, 70% 0, 54% 100%, 46% 100%);
+  background: linear-gradient(to top, color-mix(in srgb, var(--gold) 45%, transparent), transparent);
+  filter: blur(2px);
+  animation: holocron-flicker 4s steps(1) infinite;
+  pointer-events: none;
+}
+.holocron--projected::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: calc(var(--holo-size) * 1.85);
+  width: calc(var(--holo-size) * 0.5);
+  height: 4px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 12px 2px var(--gold-glow);
+}
+
+@keyframes holocron-spin {
+  from { transform: rotateX(-22deg) rotateY(0deg); }
+  to   { transform: rotateX(-22deg) rotateY(360deg); }
+}
+
+@keyframes holocron-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(0.85); }
+  50%      { opacity: 1;    transform: scale(1.1); }
+}
+
+@keyframes holocron-flicker {
+  0%, 100% { opacity: 1; }
+  47%      { opacity: 0.6; }
+  49%      { opacity: 1; }
+  83%      { opacity: 0.8; }
+}
+
+/* ── Radar sweep (loading indicator) ─────────────────────────── */
+.radar {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--gold) 60%, transparent);
+  background:
+    radial-gradient(circle, transparent 32%, color-mix(in srgb, var(--gold) 30%, transparent) 33%, transparent 36%),
+    linear-gradient(color-mix(in srgb, var(--gold) 25%, transparent), color-mix(in srgb, var(--gold) 25%, transparent)) center / 1px 100% no-repeat,
+    linear-gradient(color-mix(in srgb, var(--gold) 25%, transparent), color-mix(in srgb, var(--gold) 25%, transparent)) center / 100% 1px no-repeat;
+  box-shadow: 0 0 8px var(--gold-glow);
+  overflow: hidden;
+}
+
+.radar__sweep {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0deg 270deg, color-mix(in srgb, var(--gold) 70%, transparent) 360deg);
+  animation: radar-rotate 1.6s linear infinite;
+}
+
+.radar__blip {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 4px var(--gold);
+  opacity: 0;
+  animation: radar-blip 1.6s linear infinite;
+}
+.radar__blip:nth-child(2) { top: 22%; left: 64%; animation-delay: 0.15s; }
+.radar__blip:nth-child(3) { top: 68%; left: 70%; animation-delay: 0.55s; }
+.radar__blip:nth-child(4) { top: 58%; left: 22%; animation-delay: 1.05s; }
+
+@keyframes radar-rotate {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes radar-blip {
+  0%, 5%  { opacity: 1; }
+  60%     { opacity: 0; }
+  100%    { opacity: 0; }
+}
+
+/* ── Hyperdrive telemetry sparkline ──────────────────────────── */
+.gen-stats__spark {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 6px 0 2px;
+  overflow: visible;
+}
+.gen-stats__spark-area {
+  fill: color-mix(in srgb, var(--gold) 15%, transparent);
+}
+.gen-stats__spark-line {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.25;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.gen-stats__spark-dot {
+  fill: var(--gold);
+  filter: drop-shadow(0 0 2px var(--gold));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .holocron__cube { animation: none; transform: rotateX(-22deg) rotateY(35deg); }
+  .holocron__core,
+  .holocron--projected::before,
+  .radar__blip { animation: none; }
+  .radar__sweep { animation-duration: 6s; }
+}
